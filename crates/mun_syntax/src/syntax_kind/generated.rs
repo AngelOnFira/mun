@@ -72,6 +72,7 @@ pub enum SyntaxKind {
     LET_KW,
     MUT_KW,
     CLASS_KW,
+    STRUCT_KW,
     PUBLIC_KW,
     PROTECTED_KW,
     PRIVATE_KW,
@@ -90,6 +91,9 @@ pub enum SyntaxKind {
     VISIBILITY,
     PARAM_LIST,
     PARAM,
+    STRUCT_DEF,
+    RECORD_FIELD_DEF_LIST,
+    RECORD_FIELD_DEF,
     PATH_TYPE,
     NEVER_TYPE,
     LET_STMT,
@@ -177,6 +181,7 @@ macro_rules! T {
     (let) => { $crate::SyntaxKind::LET_KW };
     (mut) => { $crate::SyntaxKind::MUT_KW };
     (class) => { $crate::SyntaxKind::CLASS_KW };
+    (struct) => { $crate::SyntaxKind::STRUCT_KW };
     (public) => { $crate::SyntaxKind::PUBLIC_KW };
     (protected) => { $crate::SyntaxKind::PROTECTED_KW };
     (private) => { $crate::SyntaxKind::PRIVATE_KW };
@@ -219,6 +224,7 @@ impl SyntaxKind {
             | LET_KW
             | MUT_KW
             | CLASS_KW
+            | STRUCT_KW
             | PUBLIC_KW
             | PROTECTED_KW
             | PRIVATE_KW
@@ -339,6 +345,7 @@ impl SyntaxKind {
                 LET_KW => &SyntaxInfo { name: "LET_KW" },
                 MUT_KW => &SyntaxInfo { name: "MUT_KW" },
                 CLASS_KW => &SyntaxInfo { name: "CLASS_KW" },
+                STRUCT_KW => &SyntaxInfo { name: "STRUCT_KW" },
                 PUBLIC_KW => &SyntaxInfo { name: "PUBLIC_KW" },
                 PROTECTED_KW => &SyntaxInfo { name: "PROTECTED_KW" },
                 PRIVATE_KW => &SyntaxInfo { name: "PRIVATE_KW" },
@@ -357,6 +364,9 @@ impl SyntaxKind {
                 VISIBILITY => &SyntaxInfo { name: "VISIBILITY" },
                 PARAM_LIST => &SyntaxInfo { name: "PARAM_LIST" },
                 PARAM => &SyntaxInfo { name: "PARAM" },
+                STRUCT_DEF => &SyntaxInfo { name: "STRUCT_DEF" },
+                RECORD_FIELD_DEF_LIST => &SyntaxInfo { name: "RECORD_FIELD_DEF_LIST" },
+                RECORD_FIELD_DEF => &SyntaxInfo { name: "RECORD_FIELD_DEF" },
                 PATH_TYPE => &SyntaxInfo { name: "PATH_TYPE" },
                 NEVER_TYPE => &SyntaxInfo { name: "NEVER_TYPE" },
                 LET_STMT => &SyntaxInfo { name: "LET_STMT" },
@@ -408,6 +418,7 @@ impl SyntaxKind {
                 "let" => LET_KW,
                 "mut" => MUT_KW,
                 "class" => CLASS_KW,
+                "struct" => STRUCT_KW,
                 "public" => PUBLIC_KW,
                 "protected" => PROTECTED_KW,
                 "private" => PRIVATE_KW,

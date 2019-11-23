@@ -80,6 +80,7 @@ Grammar(
         "let",
         "mut",
         "class",
+        "struct",
         "public",
         "protected",
         "private",
@@ -106,6 +107,10 @@ Grammar(
 
         "PARAM_LIST",
         "PARAM",
+        
+        "STRUCT_DEF",
+        "RECORD_FIELD_DEF_LIST",
+        "RECORD_FIELD_DEF",
 
         "PATH_TYPE",
         "NEVER_TYPE",
@@ -143,7 +148,7 @@ Grammar(
             traits: [ "ModuleItemOwner", "FunctionDefOwner" ],
         ),
         "ModuleItem": (
-            enum: ["FunctionDef"]
+            enum: ["FunctionDef", "StructDef"]
         ),
         "Visibility": (),
         "FunctionDef": (
@@ -165,6 +170,22 @@ Grammar(
             traits: [
                 "TypeAscriptionOwner"
             ],
+        ),
+        "StructDef": (
+            traits: [
+                "NameOwner",
+                "VisibilityOwner",
+                "DocCommentsOwner",
+            ]
+        ),
+        "RecordFieldDefList": (collections: [("fields", "RecordFieldDef")]),
+        "RecordFieldDef": (
+            traits: [
+                "NameOwner",
+                "VisibilityOwner",
+                "DocCommentsOwner",
+                "TypeAscriptionOwner"
+            ]
         ),
         "LetStmt": (
             options: [
