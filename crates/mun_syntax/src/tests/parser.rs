@@ -1,26 +1,19 @@
 use crate::SourceFile;
 
-fn ok_snapshot_test(text: &str) {
+fn snapshot_test(text: &str) {
     let text = text.trim().replace("\n    ", "\n");
     let file = SourceFile::parse(&text);
-    let errors = file.errors();
-    assert_eq!(
-        &*errors,
-        &[] as &[crate::SyntaxError],
-        "There should be no errors\nAST:\n{}",
-        file.debug_dump()
-    );
     insta::assert_snapshot!(insta::_macro_support::AutoName, file.debug_dump(), &text);
 }
 
 #[test]
 fn empty() {
-    ok_snapshot_test(r#""#);
+    snapshot_test(r#""#);
 }
 
 #[test]
 fn function() {
-    ok_snapshot_test(
+    snapshot_test(
         r#"
     // Source file comment
 
@@ -34,7 +27,7 @@ fn function() {
 
 #[test]
 fn block() {
-    ok_snapshot_test(
+    snapshot_test(
         r#"
     fn foo() {
         let a;
@@ -46,7 +39,7 @@ fn block() {
 
 #[test]
 fn literals() {
-    ok_snapshot_test(
+    snapshot_test(
         r#"
     fn foo() {
         let a = true;
@@ -61,21 +54,28 @@ fn literals() {
 
 #[test]
 fn structures() {
-    ok_snapshot_test(
+    snapshot_test(
         r#"
+    struct Foo      // error: expected ';', or '{'
     struct Foo;
+    struct Foo;;    // error: expected a declaration
     struct Foo {}
+    struct Foo {};
     struct Foo {
         a: float,
         b: int,
     }
+    struct Foo {
+        a: float,
+        b: int,
+    };
     "#,
     )
 }
 
 #[test]
 fn unary_expr() {
-    ok_snapshot_test(
+    snapshot_test(
         r#"
     fn foo() {
         let a = --3;
@@ -87,7 +87,7 @@ fn unary_expr() {
 
 #[test]
 fn binary_expr() {
-    ok_snapshot_test(
+    snapshot_test(
         r#"
     fn foo() {
         let a = 3+4*5
@@ -99,7 +99,7 @@ fn binary_expr() {
 
 #[test]
 fn expression_statement() {
-    ok_snapshot_test(
+    snapshot_test(
         r#"
     fn foo() {
         let a = "hello"
@@ -115,7 +115,7 @@ fn expression_statement() {
 
 #[test]
 fn function_calls() {
-    ok_snapshot_test(
+    snapshot_test(
         r#"
     fn bar(i:number) { }
     fn foo(i:number) {
@@ -127,7 +127,7 @@ fn function_calls() {
 
 #[test]
 fn patterns() {
-    ok_snapshot_test(
+    snapshot_test(
         r#"
     fn main(_:number) {
        let a = 0;
@@ -139,7 +139,7 @@ fn patterns() {
 
 #[test]
 fn compare_operands() {
-    ok_snapshot_test(
+    snapshot_test(
         r#"
     fn main() {
         let _ = a==b;
@@ -156,7 +156,7 @@ fn compare_operands() {
 
 #[test]
 fn if_expr() {
-    ok_snapshot_test(
+    snapshot_test(
         r#"
     fn bar() {
         if true {};
@@ -170,7 +170,7 @@ fn if_expr() {
 
 #[test]
 fn block_expr() {
-    ok_snapshot_test(
+    snapshot_test(
         r#"
     fn bar() {
         {3}
@@ -181,7 +181,7 @@ fn block_expr() {
 
 #[test]
 fn return_expr() {
-    ok_snapshot_test(
+    snapshot_test(
         r#"
     fn foo() {
         return;
@@ -193,7 +193,7 @@ fn return_expr() {
 
 #[test]
 fn loop_expr() {
-    ok_snapshot_test(
+    snapshot_test(
         r#"
     fn foo() {
         loop {}
