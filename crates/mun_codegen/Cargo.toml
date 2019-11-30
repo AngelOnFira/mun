@@ -5,7 +5,7 @@ authors = ["The Mun Team <team@mun-lang.org>"]
 edition = "2018"
 
 [dependencies]
-mun_hir = { path = "../mun_hir" }
+hir = { path = "../mun_hir", package = "mun_hir" }
 mun_target = { path = "../mun_target" }
 mun_lld = { path = "../mun_lld" }
 failure = "0.1.5"
