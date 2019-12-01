@@ -144,6 +144,10 @@ Grammar(
 
         "PATH",
         "PATH_SEGMENT",
+
+        "RECORD_LIT",
+        "RECORD_FIELD_LIST",
+        "RECORD_FIELD",
     ],
     ast: {
         "SourceFile": (
@@ -301,5 +305,12 @@ Grammar(
                 "PlaceholderPat"
             ],
         ),
+
+        "RecordLit": (options: ["Path", "RecordFieldList"]),
+        "RecordFieldList": (
+            collections: [ ("fields", "RecordField") ],
+            options: [["spread", "Expr"]]
+        ),
+        "RecordField": (options: ["NameRef", "Expr"]),
     }
 )

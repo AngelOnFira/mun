@@ -231,3 +231,16 @@ fn while_expr() {
     "#,
     )
 }
+
+#[test]
+fn record_lit() {
+    snapshot_test(
+        r#"
+    fn foo() {
+        S {};
+        S { x, y: 32, };
+        TupleStruct { 0: 1 };
+    }
+    "#,
+    )
+}
