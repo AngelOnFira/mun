@@ -354,6 +354,10 @@ impl StructField {
     pub fn name(self, db: &impl HirDatabase) -> Name {
         self.parent.data(db).fields[self.id].name.clone()
     }
+
+    pub fn id(self) -> StructFieldId {
+        self.id
+    }
 }
 
 impl Struct {
